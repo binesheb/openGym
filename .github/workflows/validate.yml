@@ -15,4 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Validate Docker Compose configuration
-        run: docker compose config
+        run: |
+          printf 'WEB_PORT=8080\n' > .env
+          docker compose config
