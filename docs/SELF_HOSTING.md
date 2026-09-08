@@ -8,7 +8,7 @@ This guide takes you from "just cloned it" to "using it from my phone over the i
 Requirements: [Docker](https://docs.docker.com/get-docker/) with the Compose plugin.
 
 ```bash
-git clone https://github.com/DuarteSantos8/gym-app opengym
+git clone https://github.com/binesheb/openGym opengym
 cd opengym
 cp .env.example .env
 docker compose pull   # prebuilt images from ghcr.io (amd64 + arm64) — or skip and build from source
@@ -101,8 +101,8 @@ Register your own passkey profile first, then find your id in `./data/db.json` u
 and put it in `ADMIN_UIDS`. You'll get an **Admin dashboard** link in Settings: who's training
 right now, each user's workout history and body weight, the ability to disable an account (signed
 out and locked out everywhere until you re-enable it), and — with `INVITE_ONLY=1` — generating and
-revoking invite codes. Existing accounts keep working when you switch invite-only on. Admin access
-is gated by your passkey and enforced server-side, so it needs no separate login.
+revoking invite codes. Admin access is gated by your passkey and enforced server-side, so it needs
+no separate login.
 
 Prefer to keep the whole thing off the open internet? A VPN or an auth proxy (Authelia, Cloudflare
 Access…) in front still works, and composes with the above.
@@ -125,15 +125,15 @@ rest-timer-over, and a reminder on days you have a workout planned but haven't l
 Turn it on per-profile in **Settings → Notifications** (requires a signed-in passkey profile and
 HTTPS — see section 3).
 
-No setup needed server-side, and nothing to configure per timezone: VAPID keys are generated on
-first run and saved to `./data/vapid.json`, and each user's browser reports its own timezone
-automatically when they turn the reminder on — it fires at their local time, and follows them if
-they travel, regardless of what timezone the server itself runs in.
+No setup needed server-side, and nothing to configure per timezone: VAPID keys are generated on first
+run and saved to `./data/vapid.json`, and each user's browser reports its own timezone automatically
+when they turn the reminder on — it fires at their local time, and follows them if they travel,
+regardless of what timezone the server itself runs in.
 
-**Keep screen awake** (Settings → *During a workout*) has the same transport requirement: the
-Wake Lock API is only available over HTTPS or on `http://localhost`, so on a plain-LAN-IP
-instance the switch shows as unsupported. Nothing to configure server-side either way, and iOS
-refuses the lock while the phone is in Low Power Mode.
+**Keep screen awake** (Settings → *During a workout*) has the same transport requirement: the Wake
+Lock API is only available over HTTPS or on `http://localhost`, so on a plain-LAN-IP instance the
+switch shows as unsupported. Nothing to configure server-side either way, and iOS refuses the lock
+while the phone is in Low Power Mode.
 
 ## 7. Updating
 
