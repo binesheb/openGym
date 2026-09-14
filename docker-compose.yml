@@ -21,7 +21,7 @@ services:
         fi
     restart: "no"
 
-  # Passkey auth + per-user data (Node, no framework).
+  # Passkey auth + per-user state (Node, no framework).
   # image: prebuilt (docker compose pull). build: from source (docker compose up --build).
   api:
     image: ghcr.io/duartesantos8/opengym-api:latest
@@ -33,6 +33,12 @@ services:
       - DATA_DIR=/data
     volumes:
       - ./data:/data         # users, passkeys, per-user state, session secret — BACK THIS UP
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r => { if (!r.ok) process.exit(1); }).catch(() => process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
   # Builds the React frontend (multi-stage) and serves it, proxying /api → api
   # and the exercise media from the shared volume. Single origin for passkeys.
@@ -46,7 +52,7 @@ services:
       media:
         condition: service_completed_successfully
       api:
-        condition: service_started
+        condition: service_healthy
     ports:
       - "${WEB_PORT:-8080}:80"
     volumes:
