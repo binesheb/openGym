@@ -16,6 +16,11 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Validate API JavaScript syntax
         run: node --check api/server.js
+      - name: Run frontend tests
+        working-directory: frontend
+        run: |
+          npm ci
+          npm test -- --run
       - name: Validate Docker Compose configuration
         run: |
           printf 'WEB_PORT=8080\n' > .env
