@@ -4,7 +4,7 @@ services:
   # One-time: download the exercise images + GIFs into ./media (skipped if already there).
   # ~140 MB, from github.com/hasaneyldrm/exercises-dataset (CC).
   media:
-    image: alpine/git
+    image: alpine/git:2.52.0
     volumes:
       - ./media/img:/out/img
       - ./media/gif:/out/gif
